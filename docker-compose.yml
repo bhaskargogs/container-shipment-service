@@ -18,6 +18,16 @@ services:
       RABBITMQ_HOST: rabbitmq
       PUBLISH_FREQUENCY: 5
 
+  postgres-db:
+    image: postgres:latest
+    container_name: 'postgres'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass-postgres
+      POSTGRES_DB: container-db
+    ports:
+      - "5432:5432"
+
   # Run the backend as docker here
   #backend:
   #.......

@@ -9,6 +9,7 @@ import com.kn.containershipment.repository.TemplateRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.transaction.annotation.Transactional
 
 
 @Configuration
@@ -16,6 +17,7 @@ class Config {
 
     @Bean
     @Throws(Exception::class)
+    @Transactional
     fun run(templateRepository: TemplateRepository,
             actionRepository: ActionRepository,
             temperatureRangeRepository: TemperatureRangeRepository
@@ -30,9 +32,12 @@ class Config {
             val action3 = Action(id = 3, name = "shipment is arrived to destination")
             val action4 = Action(id = 4, name = "shipment is handover to the destination target")
 
-            actionRepository.saveAll(listOf(action1, action2, action3, action4))
-
-            val defaultPlanTemplate = PlanTemplate(id = 999, name = "General Shipment Template", actions = listOf(action1, action2, action3, action4), temperatureRange = temperatureRange)
+            val actionList = mutableListOf(action1, action2, action3, action4)
+            actionList.map {
+                action -> actionRepository.findById(action.id).orElse(actionRepository.save(action))
+            }
+            
+            val defaultPlanTemplate = PlanTemplate(id = 999, name = "General Shipment Template", actions = actionList, temperatureRange = temperatureRange)
 
             templateRepository.save(defaultPlanTemplate)
             templateRepository.findAll().forEach(::print)
