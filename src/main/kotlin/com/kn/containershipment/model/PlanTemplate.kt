@@ -12,9 +12,9 @@ data class PlanTemplate(
 
     val name: String? = null,
 
-    @OneToMany(targetEntity = Action::class, cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(targetEntity = Action::class, cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "pta_fk", referencedColumnName = "id")
-    val actions: MutableList<Action> = mutableListOf(),
+    val actions: MutableList<Action>? = null,
 
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch=FetchType.LAZY)
     @JoinColumn(name = "fk_temperature_range_id")

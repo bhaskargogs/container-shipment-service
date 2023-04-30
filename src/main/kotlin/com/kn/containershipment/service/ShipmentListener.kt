@@ -4,6 +4,7 @@ import com.kn.containershipment.model.Shipment
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.stereotype.Component
 
+
 @Component
 class ShipmentListener {
 

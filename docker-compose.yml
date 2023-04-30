@@ -13,12 +13,15 @@ services:
 
 
   rabbitmq-publisher:
-    image: rabbitmq-publisher  #HINT: to build this docker image, use the Dockerfile which exists in the following folder /docker/rabbitmq-publisher/Dockerfile
+    container_name: 'rabbitmq-publisher'
+    build:
+      context: ./docker/rabbitmq-publisher
+      dockerfile: Dockerfile
     environment:
       RABBITMQ_HOST: rabbitmq
       PUBLISH_FREQUENCY: 5
 
-  postgres-db:
+  db:
     image: postgres:latest
     container_name: 'postgres'
     environment:
@@ -27,6 +30,26 @@ services:
       POSTGRES_DB: container-db
     ports:
       - "5432:5432"
+
+  backend:
+    container_name: 'container-shipment-backend'
+    build:
+      context: .
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/container-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=pass-postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=kn
+      - SPRING_RABBITMQ_PASSWORD=kn
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db
+      - rabbitmq
+      - rabbitmq-publisher
 
   # Run the backend as docker here
   #backend:
