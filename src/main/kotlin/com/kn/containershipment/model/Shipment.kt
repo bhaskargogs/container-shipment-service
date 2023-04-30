@@ -2,8 +2,12 @@ package com.kn.containershipment.model
 
 import jakarta.persistence.*
 
+@Entity
+@Table(name = "shipment")
 data class Shipment(
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long = 0,
 
     val origin: String? = null,
@@ -20,6 +24,8 @@ data class Shipment(
 
     val transportType: TransportType? = null,
 
+    @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch=FetchType.LAZY)
+    @JoinColumn(name = "fk_shipment_temperature_range_id")
     val temperatureRange: TemperatureRange? = null
 )
 

@@ -12,6 +12,7 @@ interface TemperatureRangeRepository : CrudRepository<TemperatureRange, Long> {
     fun findByMinAndMax(min: Int, max: Int): TemperatureRange?
 }
 
+interface ShipmentRepository: CrudRepository<Shipment, Long>
 interface ExecutionPlanActionRepository : CrudRepository<ExecutionPlanAction, Long>
 
 interface ExecutionPlanRepository : CrudRepository<ExecutionPlan, Long>

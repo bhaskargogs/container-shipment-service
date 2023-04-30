@@ -3,3 +3,4 @@
 /container-shipment.iml
 .DS_Store
 package-lock.json
+frontend/package-lock.json

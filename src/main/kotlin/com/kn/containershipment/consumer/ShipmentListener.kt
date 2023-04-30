@@ -3,19 +3,18 @@ package com.kn.containershipment.consumer
 import com.kn.containershipment.model.ExecutionPlan
 import com.kn.containershipment.model.ExecutionPlanAction
 import com.kn.containershipment.model.Shipment
-import com.kn.containershipment.repository.ExecutionPlanActionRepository
-import com.kn.containershipment.repository.ExecutionPlanRepository
-import com.kn.containershipment.repository.TemperatureRangeRepository
-import com.kn.containershipment.repository.TemplateRepository
+import com.kn.containershipment.repository.*
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 
 @Component
-class ShipmentListener(val templateRepository: TemplateRepository,
-                       val temperatureRangeRepository: TemperatureRangeRepository,
-                       val executionPlanActionRepository: ExecutionPlanActionRepository,
+class ShipmentListener(
+    val templateRepository: TemplateRepository,
+    val temperatureRangeRepository: TemperatureRangeRepository,
+    val shipmentRepository: ShipmentRepository,
+    val executionPlanActionRepository: ExecutionPlanActionRepository,
     val executionPlanRepository: ExecutionPlanRepository
 ) {
 
@@ -36,6 +35,8 @@ class ShipmentListener(val templateRepository: TemplateRepository,
             notifyCustomer = receiver.notifyCustomer,
             transportType = receiver.transportType,
             temperatureRange = temperatureRange)
+
+        shipmentRepository.save(shipment)
 
         val executionPlanActions = template.actions?.mapTo(mutableListOf()) {
                 action ->
@@ -61,7 +62,8 @@ class ShipmentListener(val templateRepository: TemplateRepository,
         )
 
         executionPlanRepository.save(executionPlan)
+        println()
         executionPlanRepository.findAll().forEach(::println)
-
+        println()
     }
 }
