@@ -3,9 +3,7 @@ package com.kn.containershipment.config
 import com.kn.containershipment.model.Action
 import com.kn.containershipment.model.TemperatureRange
 import com.kn.containershipment.model.PlanTemplate
-import com.kn.containershipment.repository.ActionRepository
-import com.kn.containershipment.repository.TemperatureRangeRepository
-import com.kn.containershipment.repository.TemplateRepository
+import com.kn.containershipment.repository.*
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -20,9 +18,20 @@ class Config {
     @Transactional
     fun run(templateRepository: TemplateRepository,
             actionRepository: ActionRepository,
-            temperatureRangeRepository: TemperatureRangeRepository
+            temperatureRangeRepository: TemperatureRangeRepository,
+            executionActionPlanRepository: ExecutionPlanActionRepository,
+            executionPlanRepository: ExecutionPlanRepository
     ): CommandLineRunner {
         return CommandLineRunner {
+
+            // Cleaning up database initially
+            templateRepository.deleteAll()
+            temperatureRangeRepository.deleteAll()
+            actionRepository.deleteAll()
+            executionActionPlanRepository.deleteAll()
+            executionPlanRepository.deleteAll()
+
+
             val temperatureRange = TemperatureRange(id = 1, min = -20, max = -10)
 
             temperatureRangeRepository.save(temperatureRange)

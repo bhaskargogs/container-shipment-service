@@ -32,7 +32,7 @@ services:
       - "5432:5432"
 
   backend:
-    container_name: 'container-shipment-backend'
+    container_name: 'backend'
     build:
       context: .
     environment:
@@ -51,6 +51,3 @@ services:
       - rabbitmq
       - rabbitmq-publisher
 
-  # Run the backend as docker here
-  #backend:
-  #.......
