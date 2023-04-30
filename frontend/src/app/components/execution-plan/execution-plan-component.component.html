@@ -20,15 +20,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>2523423</td>
-                    <td>Frankfurt</td>
-                    <td>Berlin</td>
-                    <td>Yes</td>
-                    <td>No</td>
+                <tr *ngFor="let executionPlan of executionPlans">
+                    <td>{{ executionPlan.id }}</td>
+                    <td>{{ executionPlan.origin }}</td>
+                    <td>{{ executionPlan.destination }}</td>
+                    <td>{{ executionPlan.notifyCustomer }}</td>
                     <td class="transport-type">
-                        <span>✈️</span>
+                        <span *ngIf="executionPlan.transportType === AIR">✈️</span>
+                        <span *ngIf="executionPlan.transportType === SEA">🚢</span>
+                        <span *ngIf="executionPlan.transportType === ROAD">🚚</span>
                     </td>
+                    <td>{{ executionPlan.fragile }}</td>
                 </tr>
                 </tbody>
             </table>

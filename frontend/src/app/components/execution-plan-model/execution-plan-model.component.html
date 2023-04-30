@@ -1,7 +1,7 @@
 <div id="executionPlanModel" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form>
+            <form [formGroup]="templateForm" (ngSubmit)="onSubmit()">
                 <div class="modal-header">
                     <h4 class="modal-title">Create Execution Plan</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -9,15 +9,15 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>General Shipment Template</label>
-                        <input type="radio" class="form-control" name="template-type">
+                        <input type="radio" class="form-control" name="templateName" formControlName="templateName" value="General Shipment Template">
                     </div>
                     <div class="form-group">
                         <label>Vaccine Shipment 3P Template</label>
-                        <input type="radio" class="form-control" name="template-type" disabled>
+                        <input type="radio" class="form-control" name="templateName" formControlName="templateName" value="Vaccine Shipment 3P Template">
                     </div>
                     <div class="form-group">
                         <label>4P Shipments Template</label>
-                        <input type="radio" class="form-control" name="template-type" disabled>
+                        <input type="radio" class="form-control" name="templateName" formControlName="templateName" value="4P Shipments Template">
                     </div>
                 </div>
                 <div class="modal-footer">

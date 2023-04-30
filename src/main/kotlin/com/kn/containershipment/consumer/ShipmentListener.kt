@@ -23,7 +23,7 @@ class ShipmentListener(
     fun receiveMessage(receiver: ShipmentReceiver) {
         val temperatureRange = temperatureRangeRepository.findByMinAndMax(receiver.temperature.min, receiver.temperature.max)
 
-        val template = templateRepository.findByName("General Shipment Template")
+        val template = templateRepository.findAll().first()
 
         val shipment = Shipment(
             id = receiver.shipmentId,

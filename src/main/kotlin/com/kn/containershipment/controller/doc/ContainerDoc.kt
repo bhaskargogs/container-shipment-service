@@ -1,7 +1,9 @@
 package com.kn.containershipment.controller.doc
 
 import com.kn.containershipment.consumer.ShipmentReceiver
+import com.kn.containershipment.controller.model.TemplateRequest
 import com.kn.containershipment.model.ExecutionPlan
+import com.kn.containershipment.model.PlanTemplate
 import com.kn.containershipment.model.Shipment
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -33,5 +35,5 @@ interface ContainerDoc {
             ApiResponse(responseCode = "201", description = "Successfully created an execution plan")
         ]
     )
-    fun createExecutionPlan(shipment: ShipmentReceiver): ExecutionPlan
+    fun createExecutionPlan(templateRequest: TemplateRequest): ExecutionPlan
 }

@@ -1,18 +1,15 @@
 package com.kn.containershipment.controller
 
-import com.kn.containershipment.consumer.ShipmentReceiver
 import com.kn.containershipment.controller.doc.ContainerDoc
+import com.kn.containershipment.controller.model.TemplateRequest
 import com.kn.containershipment.model.ExecutionPlan
 import com.kn.containershipment.model.Shipment
 import com.kn.containershipment.service.ContainerService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/rest/container")
+@CrossOrigin(origins = ["http://localhost:4200", "http://127.0.0.1:4200"])
 class ContainerController(
     private val containerService: ContainerService
 ): ContainerDoc {
@@ -27,8 +24,8 @@ class ContainerController(
     }
 
     @PostMapping("/executionplans")
-    override fun createExecutionPlan(@RequestBody shipment: ShipmentReceiver): ExecutionPlan {
-        TODO()
+    override fun createExecutionPlan(@RequestBody templateRequest: TemplateRequest): ExecutionPlan {
+        return containerService.createExecutionPlan(templateRequest.shipment, templateRequest.template)
     }
 
 

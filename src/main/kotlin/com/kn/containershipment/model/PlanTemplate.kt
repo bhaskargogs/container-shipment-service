@@ -18,7 +18,7 @@ data class PlanTemplate(
 
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch=FetchType.LAZY)
     @JoinColumn(name = "fk_temperature_range_id")
-    val temperatureRange: TemperatureRange? = null
+    var temperatureRange: TemperatureRange? = null
 )
 
 @Entity
