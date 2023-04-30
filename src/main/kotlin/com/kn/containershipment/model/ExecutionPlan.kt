@@ -22,7 +22,7 @@ data class ExecutionPlan(
 
     val transportType: TransportType? = null,
 
-    @OneToOne(cascade = [CascadeType.MERGE], orphanRemoval = true, fetch=FetchType.LAZY)
+    @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch=FetchType.LAZY)
     @JoinColumn(name = "fk_exec_plan_temperature_range_id")
     val temperature: TemperatureRange? = null,
 
@@ -32,7 +32,7 @@ data class ExecutionPlan(
 
     val templateId: Long = 0,
 
-    @OneToMany(targetEntity = ExecutionPlanAction::class, cascade = [CascadeType.MERGE], orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = ExecutionPlanAction::class, cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "epa_fk", referencedColumnName = "id")
     val actions: MutableList<ExecutionPlanAction>? = null
 

@@ -9,6 +9,7 @@ import com.kn.containershipment.repository.TemperatureRangeRepository
 import com.kn.containershipment.repository.TemplateRepository
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 
 @Component
@@ -19,6 +20,7 @@ class ShipmentListener(val templateRepository: TemplateRepository,
 ) {
 
     @RabbitListener(queues = ["\${containerservice.rabbitmq.queue}"])
+    @Transactional
     fun receiveMessage(receiver: ShipmentReceiver) {
         val temperatureRange = temperatureRangeRepository.findByMinAndMax(receiver.temperature.min, receiver.temperature.max)
 
